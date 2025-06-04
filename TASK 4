@@ -1,0 +1,76 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class SalesRecord {
+  double individualSalesRevenue;
+  int customerRetentionScore;
+  double teamSalesRevenue;
+
+  public SalesRecord(double ind, int ret, double team) {
+    individualSalesRevenue = ind;
+    customerRetentionScore = ret;
+    teamSalesRevenue = team;
+  }
+
+  public String toString() {
+    return "Individual Sales: " + individualSalesRevenue + " OMR, Retention: " + customerRetentionScore + "%, Team Sales: " + teamSalesRevenue + " OMR";
+  }
+}
+
+public class UtilityMenu {
+  public static void main(String[] args) {
+    ArrayList<SalesRecord> list = new ArrayList<>();
+    Scanner sc = new Scanner(System.in);
+    int choice;
+
+    do {
+      System.out.println("\n===== Menu =====");
+      System.out.println("1. Add Record");
+      System.out.println("2. Display Record");
+      System.out.println("3. Remove Record");
+      System.out.println("4. Show All Records");
+      System.out.println("0. Exit");
+      System.out.print("Enter choice: ");
+      choice = sc.nextInt();
+
+      switch (choice) {
+        case 1:
+          System.out.print("Enter Individual Sales: ");
+          double i = sc.nextDouble();
+          System.out.print("Enter Retention Score: ");
+          int r = sc.nextInt();
+          System.out.print("Enter Team Sales: ");
+          double t = sc.nextDouble();
+          list.add(new SalesRecord(i, r, t));
+          System.out.println("Record added.");
+          break;
+        case 2:
+          System.out.print("Enter record number: ");
+          int idx = sc.nextInt();
+          if (idx >= 1 && idx <= list.size())
+            System.out.println(list.get(idx - 1));
+          else
+            System.out.println("Invalid index.");
+          break;
+        case 3:
+          System.out.print("Enter record number to remove: ");
+          int rem = sc.nextInt();
+          if (rem >= 1 && rem <= list.size()) {
+            list.remove(rem - 1);
+            System.out.println("Record removed.");
+          } else
+            System.out.println("Invalid index.");
+          break;
+        case 4:
+          for (int j = 0; j < list.size(); j++)
+            System.out.println((j + 1) + ". " + list.get(j));
+          break;
+        case 0:
+          System.out.println("Exiting...");
+          break;
+        default:
+          System.out.println("Wrong choice.");
+      }
+    } while (choice != 0);
+  }
+}
