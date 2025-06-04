@@ -1,1 +1,1 @@
-# Applications-Ooredoo-Oman
+# AppOoredOm
