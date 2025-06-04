@@ -1,0 +1,39 @@
+import java.net.Socket;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.util.Scanner;
+
+public class CommissionClient {
+    public static void main(String[] args) {
+        try {
+            Socket socket = new Socket("localhost", 5050);
+            System.out.println("Connected to the server...");
+
+            Scanner input = new Scanner(System.in);
+
+            System.out.print("Enter Individual Sales: ");
+            double individualSales = input.nextDouble();
+
+            System.out.print("Enter Customer Retention Score (0 - 100): ");
+            double retentionScore = input.nextDouble();
+
+            System.out.print("Enter Team Sales: ");
+            double teamSales = input.nextDouble();
+
+            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            out.writeDouble(individualSales);
+            out.writeDouble(retentionScore);
+            out.writeDouble(teamSales);
+
+            DataInputStream in = new DataInputStream(socket.getInputStream());
+            double result = in.readDouble();
+
+            System.out.println("Commission is: " + result + " OMR");
+
+            socket.close();
+            System.out.println("Disconnected from server.");
+        } catch (Exception e) {
+            System.out.println("Client Error: " + e.getMessage());
+        }
+    }
+}
